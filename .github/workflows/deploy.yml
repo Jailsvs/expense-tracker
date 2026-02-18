@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]  # Dispara no push para main
+  workflow_dispatch:    # Permite deploy manual via UI do GitHub
+
+# Permissões necessárias para o GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evita deploys concorrentes
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular app
+        run: |
+          npm run build -- \
+            --base-href=/expense-tracker/ \
+            --configuration=production
+        # O --base-href é crítico para funcionar no subdomínio GitHub Pages
+        # Formato: https://jailsvs.github.io/expense-tracker/
+
+      - name: Copy 404.html for SPA routing
+        run: cp dist/expense-tracker-pwa/browser/index.html dist/expense-tracker-pwa/browser/404.html
+        # GitHub Pages usa 404.html para redirecionar rotas do Angular
+
+      - name: Add .nojekyll
+        run: touch dist/expense-tracker-pwa/browser/.nojekyll
+        # Desabilita processamento Jekyll (evita problemas com _arquivos)
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist/expense-tracker-pwa/browser'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
