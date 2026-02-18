@@ -8,7 +8,10 @@
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build:gh-pages": "ng build --base-href=/expense-tracker/ --configuration=production",
+    "deploy:manual": "npm run build:gh-pages && npx gh-pages -d dist/expense-tracker-pwa/browser",
+    "serve:prod": "npm run build:gh-pages && npx http-server dist/expense-tracker-pwa/browser -o"
   },
   "private": true,
   "dependencies": {
