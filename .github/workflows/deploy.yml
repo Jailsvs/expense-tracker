@@ -35,9 +35,10 @@ jobs:
 
       - name: Build Angular app
         run: |
-          npm run build -- \
+          npx ng build \
             --base-href=/expense-tracker/ \
             --configuration=production
+        # npm run build -- \
         # O --base-href é crítico para funcionar no subdomínio GitHub Pages
         # Formato: https://jailsvs.github.io/expense-tracker/
 
