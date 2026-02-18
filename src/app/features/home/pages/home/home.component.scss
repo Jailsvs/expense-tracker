@@ -1,0 +1,358 @@
+// ── Fonte importada inline no component ──────────────────────────────────────
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap');
+
+// ── Tokens locais ─────────────────────────────────────────────────────────────
+:host {
+  --gold:        #d4a843;
+  --gold-light:  #f0c870;
+  --gold-dark:   #a07820;
+  --bg-deep:     #0a0e1a;
+  --bg-card:     #111827;
+  --text-main:   #f0f4ff;
+  --text-sub:    #94a3b8;
+  --border-glow: rgba(212, 168, 67, 0.25);
+
+  display: block;
+}
+
+// ── Wrapper ───────────────────────────────────────────────────────────────────
+.home-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-main);
+}
+
+// ── Fundo decorativo ──────────────────────────────────────────────────────────
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+
+  &--1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #d4a843 0%, transparent 70%);
+    top: -120px; left: -100px;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  &--2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #1e40af 0%, transparent 70%);
+    bottom: -80px; right: -80px;
+    animation: drift 22s ease-in-out infinite alternate-reverse;
+  }
+  &--3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #d4a843 0%, transparent 70%);
+    top: 50%; left: 55%;
+    opacity: 0.08;
+    animation: drift 28s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.08); }
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212, 168, 67, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 168, 67, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
+.home-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  max-width: 680px;
+  width: 100%;
+  gap: 2rem;
+
+  // entrada suave em cascata
+  > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  > *:nth-child(1) { animation-delay: 0.1s; }
+  > *:nth-child(2) { animation-delay: 0.25s; }
+  > *:nth-child(3) { animation-delay: 0.4s; }
+  > *:nth-child(4) { animation-delay: 0.55s; }
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ── Ícone central ─────────────────────────────────────────────────────────────
+.icon-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border-glow);
+
+  &--outer {
+    width: 120px; height: 120px;
+    animation: spin-slow 20s linear infinite;
+    border-style: dashed;
+    border-color: rgba(212, 168, 67, 0.2);
+  }
+  &--inner {
+    width: 90px; height: 90px;
+    animation: spin-slow 12s linear infinite reverse;
+    border-color: rgba(212, 168, 67, 0.35);
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.icon-core {
+  position: relative;
+  z-index: 1;
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, #1a2235, #0f1624);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(212, 168, 67, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.main-svg {
+  width: 48px;
+  height: 48px;
+  color: var(--gold-light);
+
+  .svg-house  { stroke: var(--gold-light); }
+  .svg-door   { stroke: var(--gold); }
+  .svg-roof   { stroke: var(--gold-light); }
+  .svg-coin-bg { fill: var(--gold); }
+  .svg-coin-text { fill: var(--bg-deep); }
+}
+
+// ── Identidade ────────────────────────────────────────────────────────────────
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  &__role {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+
+  &__name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.1;
+    margin: 0;
+    background: linear-gradient(135deg, #f0f4ff 30%, var(--gold-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__surname {
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 160px;
+
+    span:not(.identity__divider-dot) {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    }
+  }
+
+  &__divider-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  &__tagline {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0;
+  }
+}
+
+// ── Links de contato ──────────────────────────────────────────────────────────
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-sub);
+  transition: all 0.22s ease;
+  backdrop-filter: blur(4px);
+
+  &__icon  { font-size: 1rem; }
+  &__arrow { font-size: 0.7rem; opacity: 0; transform: translateX(-4px); transition: all 0.2s; }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.09);
+    color: var(--text-main);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+
+    .contact-chip__arrow { opacity: 0.7; transform: translateX(0); }
+  }
+
+  // Cores por rede
+  &.link-linkedin {
+    &:hover { border-color: #0077b5; box-shadow: 0 6px 20px rgba(0, 119, 181, 0.25); }
+    .contact-chip__icon { color: #0a9be0; }
+  }
+  &.link-gmail {
+    &:hover { border-color: #ea4335; box-shadow: 0 6px 20px rgba(234, 67, 53, 0.2); }
+    .contact-chip__icon { color: #ea4335; }
+  }
+  &.link-whatsapp {
+    &:hover { border-color: #25d366; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.2); }
+    .contact-chip__icon { color: #25d366; }
+  }
+}
+
+// ── CTA ───────────────────────────────────────────────────────────────────────
+.cta-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #0a0e1a;
+  box-shadow: 0 4px 24px rgba(212, 168, 67, 0.35);
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+
+  &__arrow {
+    transition: transform 0.2s ease;
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(212, 168, 67, 0.5);
+    color: #0a0e1a;
+
+    .cta-btn__arrow { transform: translateX(4px); }
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+.cta-hint {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  margin: 0;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+.home-footer {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  opacity: 0.5;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  animation: fadeUp 0.7s ease 0.7s both;
+
+  &__sep { opacity: 0.4; }
+}
+
+// ── Responsivo ────────────────────────────────────────────────────────────────
+@media (max-width: 575px) {
+  .home-main { padding: 2.5rem 1.25rem 1.5rem; gap: 1.5rem; }
+
+  .identity {
+    &__name { font-size: 1.9rem; }
+    &__tagline { font-size: 0.85rem; br { display: none; } }
+  }
+
+  .contact-chip { font-size: 0.8rem; padding: 0.5rem 0.9rem; }
+  .cta-btn { font-size: 0.9rem; padding: 0.75rem 1.5rem; }
+}

@@ -1,0 +1,50 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">
+      <i class="bi bi-collection me-2"></i>
+      Grupos de Despesas
+    </h2>
+    <button class="btn btn-primary" routerLink="/expense-groups/new">
+      <i class="bi bi-plus-lg me-2"></i>
+      Novo Grupo
+    </button>
+  </div>
+
+  @if (loading) {
+    <app-loading></app-loading>
+  } @else if (groups.length === 0) {
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle me-2"></i>
+      Nenhum grupo cadastrado. Clique em "Novo Grupo" para começar.
+    </div>
+  } @else {
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+      @for (group of groups; track group._id) {
+        <div class="col">
+          <div class="card h-100 shadow-sm group-card">
+            <div class="card-body text-center">
+              <div class="group-icon mb-3">
+                <img [src]="group.icon" [alt]="group.name" class="img-fluid">
+              </div>
+              <h5 class="card-title">{{ group.name }}</h5>
+              <div class="btn-group w-100 mt-3" role="group">
+                <button 
+                  class="btn btn-outline-primary btn-sm" 
+                  [routerLink]="['/expense-groups', group._id, 'edit']"
+                  title="Editar grupo">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button 
+                  class="btn btn-outline-danger btn-sm" 
+                  (click)="deleteGroup(group)"
+                  title="Excluir grupo">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

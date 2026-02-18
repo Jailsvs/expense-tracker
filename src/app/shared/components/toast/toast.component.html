@@ -1,0 +1,32 @@
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+  @for (toast of toasts$ | async; track toast.id) {
+    <div 
+      class="toast show mb-2"
+      [ngClass]="{
+        'bg-success text-white': toast.type === 'success',
+        'bg-danger text-white': toast.type === 'error',
+        'bg-warning text-dark': toast.type === 'warning',
+        'bg-info text-white': toast.type === 'info'
+      }"
+      role="alert">
+      <div class="toast-header">
+        <i class="bi me-2"
+           [ngClass]="{
+             'bi-check-circle-fill': toast.type === 'success',
+             'bi-x-circle-fill': toast.type === 'error',
+             'bi-exclamation-triangle-fill': toast.type === 'warning',
+             'bi-info-circle-fill': toast.type === 'info'
+           }"></i>
+        <strong class="me-auto">
+          {{ toast.type === 'success' ? 'Sucesso' : 
+             toast.type === 'error' ? 'Erro' : 
+             toast.type === 'warning' ? 'Atenção' : 'Informação' }}
+        </strong>
+        <button type="button" class="btn-close" (click)="remove(toast.id)"></button>
+      </div>
+      <div class="toast-body">
+        {{ toast.message }}
+      </div>
+    </div>
+  }
+</div>

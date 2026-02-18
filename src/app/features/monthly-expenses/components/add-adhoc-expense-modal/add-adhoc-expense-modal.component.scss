@@ -1,0 +1,39 @@
+// Garante largura mínima confortável no dialog
+:host {
+  display: block;
+}
+
+mat-dialog-content {
+  min-width: 320px;
+  max-width: 480px;
+  padding-top: 8px !important;
+
+  @media (max-width: 575px) {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+// Campo numérico alinhado à direita
+input[type='number'] {
+  text-align: right;
+}
+
+// Destaque no foco consistente com o resto do app
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-color, #1e40af);
+  box-shadow: 0 0 0 0.2rem rgba(30, 64, 175, 0.18);
+}
+
+// Alert informativo mais compacto
+.alert-info {
+  font-size: 0.85rem;
+  border-radius: 0.4rem;
+}
+
+// Ações do dialog
+mat-dialog-actions {
+  padding: 12px 24px 16px;
+  gap: 8px;
+}

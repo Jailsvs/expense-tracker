@@ -1,0 +1,125 @@
+@if (loading) {
+  <div class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+} @else if (dashboardData) {
+  <div class="row">
+    <!-- Resumo -->
+    <div class="col-md-12 mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-primary">
+              <i class="bi bi-wallet2"></i>
+            </div>
+            <div class="stat-content">
+              <small class="text-muted">Total de Despesas</small>
+              <h4 class="mb-0">{{ dashboardData.totalExpenses | currencyBr }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-success">
+              <i class="bi bi-check-circle"></i>
+            </div>
+            <div class="stat-content">
+              <small class="text-muted">Total Pago</small>
+              <h4 class="mb-0 text-success">{{ dashboardData.totalPaid | currencyBr }}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card">
+            <div class="stat-icon bg-danger">
+              <i class="bi bi-exclamation-circle"></i>
+            </div>
+            <div class="stat-content">
+              <small class="text-muted">Total a Pagar</small>
+              <h4 class="mb-0 text-danger">{{ dashboardData.totalPending | currencyBr }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico de Pizza Simplificado -->
+    <div class="col-md-6 mb-4">
+      <h6 class="mb-3">Distribuição por Grupo</h6>
+      <div class="pie-chart">
+        @for (group of dashboardData.byGroup; track group.groupId; let i = $index) {
+          <div 
+            class="pie-slice" 
+            [style.background-color]="getColorByIndex(i)"
+            [style.flex-grow]="group.percentage"
+            [title]="group.groupName + ': ' + (group.totalAmount | currencyBr) + ' (' + group.percentage.toFixed(1) + '%)'">
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Legenda e Detalhes -->
+    <div class="col-md-6">
+      <h6 class="mb-3">Detalhes por Grupo</h6>
+      <div class="group-list">
+        @for (group of dashboardData.byGroup; track group.groupId; let i = $index) {
+          <div class="group-item">
+            <div class="d-flex align-items-center mb-2">
+              <div 
+                class="group-color" 
+                [style.background-color]="getColorByIndex(i)">
+              </div>
+              <div class="group-icon me-2">
+                <img [src]="group.groupIcon" [alt]="group.groupName" />
+              </div>
+              <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <strong>{{ group.groupName }}</strong>
+                    <br>
+                    <small class="text-muted">
+                      {{ group.percentage.toFixed(1) }}% do total
+                    </small>
+                  </div>
+                  <div class="text-end">
+                    <div class="fw-bold">{{ group.totalAmount | currencyBr }}</div>
+                    @if (group.pendingAmount > 0) {
+                      <small class="text-danger">
+                        A pagar: {{ group.pendingAmount | currencyBr }}
+                      </small>
+                    } @else {
+                      <small class="text-success">
+                        <i class="bi bi-check"></i> Pago
+                      </small>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="progress" style="height: 8px;">
+              <div 
+                class="progress-bar" 
+                [style.width.%]="(group.totalAmount - group.pendingAmount) / group.totalAmount * 100"
+                [style.background-color]="getColorByIndex(i)">
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (dashboardData.byGroup.length === 0) {
+          <div class="text-center text-muted py-4">
+            <i class="bi bi-inbox display-4 d-block mb-2"></i>
+            Nenhum dado disponível
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="text-center text-muted py-4">
+    <i class="bi bi-inbox display-4 d-block mb-2"></i>
+    Nenhum dado disponível para o período selecionado
+  </div>
+}

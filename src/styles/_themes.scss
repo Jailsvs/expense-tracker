@@ -1,0 +1,291 @@
+/* =============================================================================
+   TEMAS - CUSTOMIZAÇÕES ESPECÍFICAS DE COMPONENTES
+   ============================================================================= */
+
+/* =============================================================================
+   TEMA ESCURO - AJUSTES BOOTSTRAP
+   ============================================================================= */
+
+.dark-theme {
+  
+  /* Cards */
+  .card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+  }
+
+  .card-header {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-color);
+  }
+
+  /* Forms */
+  .form-control,
+  .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+
+    &:focus {
+      background-color: var(--input-bg);
+      border-color: var(--primary-color);
+      color: var(--text-color);
+      box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+
+    &:disabled {
+      background-color: #334155;
+      color: var(--text-muted);
+    }
+  }
+
+  .form-control::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* Tables */
+  .table {
+    color: var(--text-color);
+
+    thead {
+      background-color: var(--table-header-bg);
+      border-color: var(--border-color);
+    }
+
+    th,
+    td {
+      border-color: var(--border-color);
+    }
+
+    tbody tr:hover {
+      background-color: var(--table-hover-bg);
+    }
+  }
+
+  .table-light {
+    background-color: var(--table-header-bg);
+    color: var(--text-color);
+  }
+
+  .table-success {
+    background-color: rgba(52, 211, 153, 0.2);
+    color: var(--success-color);
+  }
+
+  .table-danger {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: var(--danger-color);
+  }
+
+  /* Alerts */
+  .alert-info {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+  }
+
+  .alert-success {
+    background-color: rgba(52, 211, 153, 0.2);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #6ee7b7;
+  }
+
+  .alert-warning {
+    background-color: rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.3);
+    color: #fde68a;
+  }
+
+  .alert-danger {
+    background-color: rgba(248, 113, 113, 0.2);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #fca5a5;
+  }
+
+  /* Badges */
+  .badge {
+    color: #0f172a;
+  }
+
+  .badge.bg-secondary {
+    background-color: var(--secondary-color) !important;
+    color: #0f172a;
+  }
+
+  /* Buttons */
+  .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+  }
+
+  .btn-outline-secondary {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+
+    &:hover {
+      background-color: var(--secondary-color);
+      color: #0f172a;
+    }
+  }
+
+  .btn-outline-danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+
+    &:hover {
+      background-color: var(--danger-color);
+      color: white;
+    }
+  }
+
+  .btn-link {
+    color: var(--primary-color);
+
+    &:hover {
+      color: var(--primary-color-light);
+    }
+  }
+
+  /* Navbar */
+  .navbar {
+    background-color: var(--primary-color) !important;
+  }
+
+  .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+
+    &:hover,
+    &.active {
+      color: white;
+    }
+  }
+
+  /* Dropdown */
+  .dropdown-menu {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+  }
+
+  .dropdown-item {
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--table-hover-bg);
+    }
+  }
+
+  /* Modal */
+  .modal-content {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+  }
+
+  .modal-header,
+  .modal-footer {
+    border-color: var(--border-color);
+  }
+
+  /* Pagination */
+  .page-link {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--table-hover-bg);
+      color: var(--primary-color);
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  /* List Group */
+  .list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--table-hover-bg);
+    }
+  }
+
+  /* Text Utilities */
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
+
+  /* Borders */
+  hr {
+    border-color: var(--border-color);
+    opacity: 1;
+  }
+}
+
+/* =============================================================================
+   TRANSIÇÕES DE TEMA
+   ============================================================================= */
+
+html,
+body,
+.card,
+.form-control,
+.form-select,
+.btn,
+.table,
+.navbar,
+.modal-content,
+.dropdown-menu {
+  transition: background-color var(--transition-slow),
+              color var(--transition-slow),
+              border-color var(--transition-slow);
+}
+
+/* =============================================================================
+   CUSTOMIZAÇÕES ANGULAR MATERIAL NO TEMA ESCURO
+   ============================================================================= */
+
+.dark-theme {
+  
+  /* Material Buttons */
+  .mat-mdc-button,
+  .mat-mdc-raised-button {
+    color: var(--text-color);
+  }
+
+  /* Material Dialog */
+  .mat-mdc-dialog-container {
+    background-color: var(--card-bg);
+  }
+
+  .mat-mdc-dialog-title {
+    color: var(--text-color);
+  }
+
+  .mat-mdc-dialog-content {
+    color: var(--text-color);
+  }
+
+  /* Material Form Fields */
+  .mat-mdc-form-field {
+    .mat-mdc-input-element {
+      color: var(--text-color);
+    }
+  }
+
+  /* Material Snackbar (se usado) */
+  .mat-mdc-snack-bar-container {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
+}

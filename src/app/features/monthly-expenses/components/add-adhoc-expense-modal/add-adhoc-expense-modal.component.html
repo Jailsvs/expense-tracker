@@ -1,0 +1,131 @@
+<h2 mat-dialog-title>
+  <i class="bi bi-plus-circle me-2 text-primary"></i>
+  Nova Despesa Manual
+</h2>
+
+<mat-dialog-content>
+  <p class="text-muted mb-3">
+    <i class="bi bi-calendar3 me-1"></i>
+    {{ getMonthName() }}/{{ data.year }}
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Descrição -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">
+        Descrição <span class="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [class.is-invalid]="fieldInvalid('description')"
+        formControlName="description"
+        placeholder="Ex: Conserto do carro"
+        maxlength="100"
+        autofocus>
+      @if (fieldInvalid('description')) {
+        <div class="invalid-feedback">
+          @if (form.get('description')?.errors?.['required']) {
+            Descrição é obrigatória.
+          } @else if (form.get('description')?.errors?.['minlength']) {
+            Mínimo de 3 caracteres.
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Valor -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">
+        Valor (R$) <span class="text-danger">*</span>
+      </label>
+      <input
+        type="number"
+        class="form-control"
+        [class.is-invalid]="fieldInvalid('amount')"
+        formControlName="amount"
+        placeholder="0,00"
+        step="0.01"
+        min="0.01">
+      @if (fieldInvalid('amount')) {
+        <div class="invalid-feedback">
+          @if (form.get('amount')?.errors?.['required']) {
+            Valor é obrigatório.
+          } @else if (form.get('amount')?.errors?.['min']) {
+            Valor deve ser maior que zero.
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Vencimento -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">
+        Vencimento <span class="text-danger">*</span>
+      </label>
+      <input
+        type="date"
+        class="form-control"
+        [class.is-invalid]="fieldInvalid('dueDate')"
+        formControlName="dueDate">
+      @if (fieldInvalid('dueDate')) {
+        <div class="invalid-feedback">Data de vencimento é obrigatória.</div>
+      }
+    </div>
+
+    <!-- Grupo -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">
+        Grupo <span class="text-danger">*</span>
+      </label>
+      <select
+        class="form-select"
+        [class.is-invalid]="fieldInvalid('groupId')"
+        formControlName="groupId">
+        <option value="" disabled>Selecione um grupo</option>
+        @for (group of data.groups; track group._id) {
+          <option [value]="group._id">{{ group.name }}</option>
+        }
+      </select>
+      @if (fieldInvalid('groupId')) {
+        <div class="invalid-feedback">Selecione um grupo.</div>
+      }
+    </div>
+
+    <!-- Informações Adicionais -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Informações Adicionais</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="additionalInfo"
+        placeholder="Observações (opcional)"
+        maxlength="200">
+    </div>
+
+    <!-- Info: DD sempre false -->
+    <div class="alert alert-info d-flex align-items-center gap-2 py-2 mb-0">
+      <i class="bi bi-info-circle-fill flex-shrink-0"></i>
+      <small>
+        Despesas manuais <strong>não são débito direto</strong> e
+        <strong>não são copiadas</strong> ao carregar o mês anterior.
+      </small>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()">
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="onSubmit()">
+    <i class="bi bi-plus-lg me-1"></i>
+    Criar Despesa
+  </button>
+</mat-dialog-actions>

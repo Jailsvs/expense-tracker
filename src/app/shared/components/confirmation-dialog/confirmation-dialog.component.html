@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>
+  <i class="bi me-2" [ngClass]="{
+    'bi-info-circle text-info': data.type === 'info',
+    'bi-exclamation-triangle text-warning': data.type === 'warning',
+    'bi-x-circle text-danger': data.type === 'danger'
+  }"></i>
+  {{ data.title }}
+</h2>
+
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <!-- ⭐ NOVO: Se for modal de carregar despesas, mostra 2 botões principais -->
+  @if (data.title === 'Carregar Despesas') {
+    <div class="d-grid gap-2 w-100">
+      <button 
+        mat-raised-button 
+        color="primary"
+        [mat-dialog-close]="'fixed'"
+        class="w-100">
+        <i class="bi bi-list-check me-2"></i>
+        Despesas Fixas
+      </button>
+      <button 
+        mat-raised-button 
+        color="accent"
+        [mat-dialog-close]="'previous'"
+        class="w-100">
+        <i class="bi bi-calendar-month me-2"></i>
+        Mês Anterior
+      </button>
+      <button 
+        mat-button 
+        [mat-dialog-close]="false"
+        class="w-100">
+        {{ data.cancelText || 'Cancelar' }}
+      </button>
+    </div>
+  } @else {
+    <!-- Modal normal com confirmação/cancelamento -->
+    <button 
+      mat-button 
+      [mat-dialog-close]="false">
+      {{ data.cancelText || 'Cancelar' }}
+    </button>
+    <button 
+      mat-raised-button 
+      [color]="data.type === 'danger' ? 'warn' : 'primary'"
+      [mat-dialog-close]="true">
+      {{ data.confirmText }}
+    </button>
+  }
+</mat-dialog-actions>

@@ -1,0 +1,137 @@
+/* =============================================================================
+   VARIABLES - TEMA CLARO E ESCURO
+   ============================================================================= */
+
+/* =============================================================================
+   TEMA CLARO (Padrão)
+   ============================================================================= */
+
+:root {
+  /* Cores Primárias */
+  --primary-color: #1e40af;
+  --primary-color-light: #3b82f6;
+  --primary-color-dark: #1e3a8a;
+  
+  /* Cores Secundárias */
+  --secondary-color: #64748b;
+  --secondary-color-light: #94a3b8;
+  --secondary-color-dark: #475569;
+  
+  /* Cores de Estado */
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --info-color: #3b82f6;
+  
+  /* Cores de Background */
+  --bg-color: #f8fafc;
+  --bg-color-secondary: #f1f5f9;
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  
+  /* Cores de Texto */
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  /* Bordas */
+  --border-color: #e2e8f0;
+  --border-color-light: #f1f5f9;
+  
+  /* Tabelas */
+  --table-header-bg: #f8fafc;
+  --table-hover-bg: #f1f5f9;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Espaçamentos */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+/* =============================================================================
+   TEMA ESCURO
+   ============================================================================= */
+
+.dark-theme {
+  /* Cores Primárias (mais claras no escuro) */
+  --primary-color: #3b82f6;
+  --primary-color-light: #60a5fa;
+  --primary-color-dark: #2563eb;
+  
+  /* Cores Secundárias */
+  --secondary-color: #94a3b8;
+  --secondary-color-light: #cbd5e1;
+  --secondary-color-dark: #64748b;
+  
+  /* Cores de Estado (mais vibrantes) */
+  --success-color: #34d399;
+  --danger-color: #f87171;
+  --warning-color: #fbbf24;
+  --info-color: #60a5fa;
+  
+  /* Cores de Background */
+  --bg-color: #0f172a;
+  --bg-color-secondary: #1e293b;
+  --card-bg: #1e293b;
+  --input-bg: #1e293b;
+  
+  /* Cores de Texto */
+  --text-color: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  
+  /* Bordas */
+  --border-color: #334155;
+  --border-color-light: #475569;
+  
+  /* Tabelas */
+  --table-header-bg: #1e293b;
+  --table-hover-bg: #334155;
+  
+  /* Sombras (mais sutis no escuro) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+}
+
+/* =============================================================================
+   BREAKPOINTS (Mobile First)
+   ============================================================================= */
+
+$breakpoint-xs: 375px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+/* =============================================================================
+   Z-INDEX LAYERS
+   ============================================================================= */
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+$z-index-toast: 9999;

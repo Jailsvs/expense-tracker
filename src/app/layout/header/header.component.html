@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" routerLink="/monthly-expenses">
+      <i class="bi bi-wallet2 me-2"></i>
+      Expense Tracker
+    </a>
+
+    <!--
+      Bootstrap nativo: data-bs-toggle + data-bs-target controlam o collapse
+      sem nenhuma lógica Angular ou CSS manual de animação.
+    -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link"
+             routerLink="/monthly-expenses"
+             routerLinkActive="active"
+             data-bs-toggle="collapse"
+             data-bs-target=".navbar-collapse.show">
+            <i class="bi bi-calendar3 me-1"></i>
+            Despesas Mensais
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             routerLink="/expenses"
+             routerLinkActive="active"
+             data-bs-toggle="collapse"
+             data-bs-target=".navbar-collapse.show">
+            <i class="bi bi-list-check me-1"></i>
+            Despesas Fixas
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             routerLink="/expense-groups"
+             routerLinkActive="active"
+             data-bs-toggle="collapse"
+             data-bs-target=".navbar-collapse.show">
+            <i class="bi bi-collection me-1"></i>
+            Grupos
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <button
+          class="btn btn-link text-white me-2"
+          (click)="toggleTheme()"
+          [title]="isDarkTheme ? 'Tema Claro' : 'Tema Escuro'">
+          <i class="bi" [ngClass]="isDarkTheme ? 'bi-sun-fill' : 'bi-moon-fill'"></i>
+        </button>
+
+        <a class="btn btn-outline-light btn-sm"
+           routerLink="/config"
+           data-bs-toggle="collapse"
+           data-bs-target=".navbar-collapse.show">
+          <i class="bi bi-gear me-1"></i>
+          Config
+        </a>
+      </div>
+    </div>
+
+  </div>
+</nav>

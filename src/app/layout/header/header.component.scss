@@ -1,0 +1,56 @@
+// Estilos visuais da navbar — o comportamento do collapse é 100% Bootstrap JS.
+// Os blocos que foram REMOVIDOS deste arquivo estão comentados abaixo
+// para referência; eles conflitavam com a animação nativa do Bootstrap:
+//
+//   @media (max-width: 991px) {
+//     .navbar-collapse {
+//       transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+//       max-height: 0;
+//       opacity: 0;
+//       overflow: hidden;
+//       &.show { max-height: 500px; opacity: 1; }
+//     }
+//   }
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.25rem;
+
+  i {
+    font-size: 1.5rem;
+    vertical-align: middle;
+  }
+}
+
+.nav-link {
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+  padding: 0.5rem 1rem;
+
+  &:hover,
+  &.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.btn-link {
+  text-decoration: none;
+  font-size: 1.25rem;
+  padding: 0.25rem 0.5rem;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Espaçamento interno do menu expandido em mobile
+@media (max-width: 991px) {
+  .navbar-nav {
+    margin-top: 1rem;
+  }
+
+  .d-flex {
+    margin-top: 1rem;
+    justify-content: flex-start !important;
+  }
+}

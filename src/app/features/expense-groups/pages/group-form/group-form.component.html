@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-collection me-2"></i>
+            {{ isEditMode ? 'Editar Grupo' : 'Novo Grupo' }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nome do Grupo</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="name"
+                placeholder="Ex: Moradia, Transporte, Alimentação">
+              @if (groupForm.get('name')?.invalid && groupForm.get('name')?.touched) {
+                <small class="text-danger">
+                  Nome é obrigatório (mínimo 3 caracteres)
+                </small>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ícone</label>
+              <input 
+                type="file" 
+                class="form-control" 
+                accept="image/png,image/jpeg,image/svg+xml"
+                (change)="onFileSelected($event)">
+              <small class="text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                PNG, JPEG ou SVG. Máximo 50KB. Recomendado: 64x64px
+              </small>
+            </div>
+
+            @if (iconPreview) {
+              <div class="mb-3">
+                <label class="form-label fw-bold">Preview</label>
+                <div class="icon-preview">
+                  <img [src]="iconPreview" alt="Preview" class="img-fluid">
+                </div>
+              </div>
+            }
+
+            <div class="d-grid gap-2 mt-4">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg" 
+                [disabled]="groupForm.invalid || loading">
+                <i class="bi bi-check-lg me-2"></i>
+                {{ isEditMode ? 'Salvar Alterações' : 'Criar Grupo' }}
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                (click)="onCancel()"
+                [disabled]="loading">
+                <i class="bi bi-x-lg me-2"></i>
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

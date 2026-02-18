@@ -1,0 +1,106 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">
+      <i class="bi bi-list-check me-2"></i>
+      Despesas Fixas
+    </h2>
+    <button class="btn btn-primary" routerLink="/expenses/new">
+      <i class="bi bi-plus-lg me-2"></i>
+      Nova Despesa
+    </button>
+  </div>
+
+  @if (loading) {
+    <app-loading></app-loading>
+  } @else if (expenses.length === 0) {
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle me-2"></i>
+      Nenhuma despesa cadastrada. Clique em "Nova Despesa" para começar.
+    </div>
+  } @else {
+    <div class="card shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Descrição</th>
+              <th>Grupo</th>
+              <th class="text-end">Valor</th>
+              <th class="text-center">Dia Pagto</th>
+              <th class="text-center d-none d-md-table-cell">Débito Direto</th>
+              <th class="d-none d-lg-table-cell">Info Adicional</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (expense of expenses; track expense._id) {
+              <tr>
+                <td class="fw-bold">{{ expense.description }}</td>
+                <td>
+                  <span class="badge bg-primary bg-opacity-75">
+                    {{ getGroupName(expense.groupId) }}
+                  </span>
+                </td>
+                <td class="text-end">{{ expense.amount | currencyBr }}</td>
+                <td class="text-center">
+                  <span class="badge bg-secondary">Dia {{ expense.paymentDay }}</span>
+                </td>
+                <td class="text-center d-none d-md-table-cell">
+                  <span class="badge" 
+                        [class.bg-success]="expense.isDirectDebit"
+                        [class.bg-secondary]="!expense.isDirectDebit">
+                    {{ expense.isDirectDebit ? 'Sim' : 'Não' }}
+                  </span>
+                </td>
+                <td class="d-none d-lg-table-cell">
+                  <small class="text-muted">{{ expense.additionalInfo || '-' }}</small>
+                </td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-sm">
+                    <button 
+                      class="btn btn-outline-primary"
+                      [routerLink]="['/expenses', expense._id, 'edit']"
+                      title="Editar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button 
+                      class="btn btn-outline-danger"
+                      (click)="deleteExpense(expense)"
+                      title="Excluir">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="text-muted mb-3">Resumo</h6>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Total de despesas:</span>
+              <strong>{{ expenses.length }}</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Com débito direto:</span>
+              <strong>{{ getDirectDebitCount() }}</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Valor total mensal:</span>
+              <strong class="text-primary">
+                {{ getTotalAmount() | currencyBr }}
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

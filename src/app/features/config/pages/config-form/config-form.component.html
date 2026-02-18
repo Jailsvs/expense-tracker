@@ -1,0 +1,191 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-fire me-2"></i>
+            Configuração Firebase
+          </h4>
+        </div>
+        <div class="card-body">
+          @if (useMockData) {
+            <div class="alert alert-info mb-3">
+              <i class="bi bi-info-circle me-2"></i>
+              <strong>Modo Mock:</strong> Usando dados de exemplo. Configure o Firebase para usar dados reais.
+            </div>
+          } @else {
+            <div class="alert alert-success mb-3">
+              <i class="bi bi-check-circle me-2"></i>
+              <strong>Firebase Configurado:</strong> Conectado ao projeto Firebase.
+            </div>
+          }
+
+          <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+            
+            <!-- API Key -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                API Key <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control" 
+                  formControlName="apiKey" 
+                  placeholder="AIzaSy...">
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                  (click)="togglePasswordVisibility()">
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+              </div>
+              <small class="text-muted">
+                <i class="bi bi-shield-lock me-1"></i>
+                Armazenado com segurança no IndexedDB do navegador
+              </small>
+            </div>
+
+            <!-- Auth Domain -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                Auth Domain <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="authDomain" 
+                placeholder="seu-projeto.firebaseapp.com">
+            </div>
+
+            <!-- Project ID -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                Project ID <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="projectId" 
+                placeholder="seu-projeto">
+            </div>
+
+            <!-- Storage Bucket -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                Storage Bucket <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="storageBucket" 
+                placeholder="seu-projeto.appspot.com">
+            </div>
+
+            <div class="row">
+              <!-- Messaging Sender ID -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  Messaging Sender ID <span class="text-danger">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="messagingSenderId" 
+                  placeholder="123456789">
+              </div>
+
+              <!-- Measurement ID (opcional) -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">
+                  Measurement ID
+                  <small class="text-muted">(opcional)</small>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="measurementId" 
+                  placeholder="G-XXXXXXXXXX">
+              </div>
+            </div>
+
+            <!-- App ID -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">
+                App ID <span class="text-danger">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="appId" 
+                placeholder="1:123456789:web:abc123">
+            </div>
+
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg" 
+                [disabled]="!configForm.valid">
+                <i class="bi bi-check-lg me-2"></i>
+                Salvar Configuração
+              </button>
+              
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                (click)="clearConfig()">
+                <i class="bi bi-trash me-2"></i>
+                Limpar e Usar Mock
+              </button>
+
+              <button 
+                type="button" 
+                class="btn btn-outline-info" 
+                (click)="copyExampleJson()">
+                <i class="bi bi-clipboard me-2"></i>
+                Copiar JSON de Exemplo
+              </button>
+            </div>
+          </form>
+
+          <hr class="my-4">
+
+          <!-- Instruções -->
+          <div class="small text-muted">
+            <p class="mb-2"><strong>📚 Passos para configurar Firebase:</strong></p>
+            <ol class="mb-3">
+              <li>Acesse <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a></li>
+              <li>Crie um novo projeto ou selecione um existente</li>
+              <li>Clique em "Adicionar app" e escolha "Web" (ícone &lt;/&gt;)</li>
+              <li>Registre o app e copie as configurações</li>
+              <li>Cole os valores nos campos acima</li>
+              <li>No Firebase Console, ative o <strong>Firestore Database</strong></li>
+              <li>Configure as regras de segurança (veja abaixo)</li>
+            </ol>
+
+            <p class="mb-2"><strong>🔒 Regras de Segurança Recomendadas:</strong></p>
+            <div class="bg-dark text-light p-3 rounded mb-3" style="font-size: 0.85rem;">
+              <code>
+                rules_version = '2';<br>
+                service cloud.firestore <br>
+                &nbsp;&nbsp;match /databases/[database]/documents <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;// Permite leitura e escrita para todos (desenvolvimento)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;match /[document=**] <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if true;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;<br>
+              </code>
+            </div>
+
+            <div class="alert alert-warning mb-0">
+              <i class="bi bi-exclamation-triangle me-2"></i>
+              <strong>Atenção:</strong> As regras acima são para desenvolvimento. 
+              Para produção, implemente autenticação e regras de segurança adequadas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-list-check me-2"></i>
+            {{ isEditMode ? 'Editar Despesa Fixa' : 'Nova Despesa Fixa' }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">
+                  Descrição <span class="text-danger">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="description"
+                  placeholder="Ex: Aluguel, Energia Elétrica, Água"
+                  [class.is-invalid]="expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched">
+                @if (expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessage('description') }}
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">
+                  Valor (R$) <span class="text-danger">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="amount"
+                  placeholder="0,00"
+                  step="0.01"
+                  min="0"
+                  [class.is-invalid]="expenseForm.get('amount')?.invalid && expenseForm.get('amount')?.touched">
+                @if (expenseForm.get('amount')?.invalid && expenseForm.get('amount')?.touched) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessage('amount') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold">
+                  Dia do Pagamento <span class="text-danger">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="paymentDay"
+                  placeholder="1-31"
+                  min="1"
+                  max="31"
+                  [class.is-invalid]="expenseForm.get('paymentDay')?.invalid && expenseForm.get('paymentDay')?.touched">
+                <small class="text-muted">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Dia do mês (1-31). Será ajustado para dia útil automaticamente.
+                </small>
+                @if (expenseForm.get('paymentDay')?.invalid && expenseForm.get('paymentDay')?.touched) {
+                  <div class="invalid-feedback d-block">
+                    {{ getErrorMessage('paymentDay') }}
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold">
+                  Grupo <span class="text-danger">*</span>
+                </label>
+                <select 
+                  class="form-select" 
+                  formControlName="groupId"
+                  [class.is-invalid]="expenseForm.get('groupId')?.invalid && expenseForm.get('groupId')?.touched">
+                  <option value="">Selecione um grupo...</option>
+                  @for (group of groups; track group._id) {
+                    <option [value]="group._id">{{ group.name }}</option>
+                  }
+                </select>
+                @if (expenseForm.get('groupId')?.invalid && expenseForm.get('groupId')?.touched) {
+                  <div class="invalid-feedback">
+                    {{ getErrorMessage('groupId') }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-check form-switch">
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  id="isDirectDebit"
+                  formControlName="isDirectDebit">
+                <label class="form-check-label" for="isDirectDebit">
+                  <strong>Débito Direto (DD)</strong>
+                  <br>
+                  <small class="text-muted">Despesa com cobrança automática</small>
+                </label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Informações Adicionais</label>
+              <textarea 
+                class="form-control" 
+                formControlName="additionalInfo"
+                rows="3"
+                placeholder="Ex: Matrícula de energia, número de contrato, observações..."
+                maxlength="500"></textarea>
+              <small class="text-muted">
+                {{ expenseForm.get('additionalInfo')?.value?.length || 0 }}/500 caracteres
+              </small>
+            </div>
+
+            <div class="alert alert-info mb-3">
+              <i class="bi bi-lightbulb me-2"></i>
+              <strong>Dica:</strong> Despesas fixas são aquelas que se repetem todos os meses. 
+              Elas serão carregadas automaticamente na gestão mensal.
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                (click)="onCancel()"
+                [disabled]="loading">
+                <i class="bi bi-x-lg me-2"></i>
+                Cancelar
+              </button>
+              <button 
+                type="submit" 
+                class="btn btn-primary" 
+                [disabled]="expenseForm.invalid || loading">
+                <i class="bi bi-check-lg me-2"></i>
+                {{ isEditMode ? 'Salvar Alterações' : 'Criar Despesa' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,282 @@
+<div class="container-fluid p-3 p-md-4">
+
+  <!-- Header com Filtros -->
+  <div class="card mb-3 mb-md-4 shadow-sm">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+
+        <!-- Mês -->
+        <div class="col-6 col-md-3">
+          <label class="form-label fw-bold">Mês</label>
+          <select class="form-select" [(ngModel)]="selectedMonth" (change)="loadExpenses()">
+            @for (month of months; track month.value) {
+              <option [ngValue]="month.value">{{ month.label }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Ano -->
+        <div class="col-6 col-md-3">
+          <label class="form-label fw-bold">Ano</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedYear"
+            (change)="loadExpenses()"
+            min="2020"
+            max="2030">
+        </div>
+
+        <!-- Ações: Carregar Despesas (dropdown) + Nova Despesa -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex flex-wrap gap-2">
+
+            <!-- Dropdown: Carregar Despesas -->
+            <div class="dropdown flex-grow-1 flex-md-grow-0" (clickOutside)="closeDropdown()">
+              <button
+                class="btn btn-primary dropdown-toggle w-100"
+                type="button"
+                (click)="toggleDropdown()">
+                <i class="bi bi-download me-2"></i>
+                Carregar Despesas
+              </button>
+
+              <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+                <li>
+                  <a class="dropdown-item" (click)="loadFixedExpenses(); closeDropdown()">
+                    <i class="bi bi-list-check me-2"></i>
+                    Despesas Fixas
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="loadPreviousMonthExpenses(); closeDropdown()">
+                    <i class="bi bi-calendar-month me-2"></i>
+                    Mês Anterior
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botão: Nova Despesa Manual -->
+            <button
+              class="btn btn-success flex-grow-1 flex-md-grow-0"
+              type="button"
+              (click)="openAddAdHocExpenseModal()"
+              title="Adicionar despesa manual não vinculada a uma despesa fixa">
+              <i class="bi bi-plus-lg me-2"></i>
+              <span class="d-none d-sm-inline">Nova Despesa</span>
+              <span class="d-sm-none">Nova</span>
+            </button>
+
+          </div>
+        </div>
+
+      </div><!-- /row -->
+
+      <!-- Totalizadores Mobile -->
+      <div class="d-md-none mt-3">
+        <div class="row g-2">
+          <div class="col-4">
+            <div class="text-center p-2 bg-light rounded">
+              <small class="text-muted d-block">Total</small>
+              <strong class="text-primary">{{ totalExpenses | currencyBr }}</strong>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center p-2 bg-success bg-opacity-10 rounded">
+              <small class="text-muted d-block">Pago</small>
+              <strong class="text-success">{{ totalPaid | currencyBr }}</strong>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-center p-2 bg-danger bg-opacity-10 rounded">
+              <small class="text-muted d-block">A Pagar</small>
+              <strong class="text-danger">{{ totalPending | currencyBr }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /card-body -->
+  </div><!-- /card -->
+
+  <!-- Loading / Grid -->
+  @if (loading) {
+    <app-loading></app-loading>
+  } @else {
+
+    <!-- Grid de Despesas -->
+    <div class="card shadow-sm mb-3 mb-md-4">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="text-center" style="width:60px">Pago</th>
+              <th style="min-width:200px">Despesa</th>
+              <th class="text-end" style="width:120px">Valor</th>
+              <th class="d-none d-md-table-cell" style="width:140px">Vencimento</th>
+              <th class="d-none d-lg-table-cell text-center" style="width:80px">Tipo</th>
+              <th class="d-none d-md-table-cell" style="width:140px">Data Pagto</th>
+              <th class="text-center" style="width:80px">Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (expense of monthlyExpenses; track expense._id) {
+              <tr
+                [class.table-success]="expense.isPaid"
+                [class.table-danger]="!expense.isPaid"
+                [class.row-paid]="expense.isPaid"
+                [class.row-pending]="!expense.isPaid">
+
+                <!-- Pago -->
+                <td class="text-center">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    [(ngModel)]="expense.isPaid"
+                    (change)="onPaidChange(expense)"
+                    style="width:1.5rem;height:1.5rem;">
+                </td>
+
+                <!-- Despesa / Grupo -->
+                <td>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm expense-input"
+                    [(ngModel)]="expense.description"
+                    (blur)="updateDescription(expense, $event)">
+                  <small class="text-muted d-block mt-1">
+                    <i class="bi bi-tag me-1"></i>{{ getGroupName(expense.groupId) }}
+                  </small>
+                </td>
+
+                <!-- Valor -->
+                <td>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm text-end expense-input"
+                    [(ngModel)]="expense.amount"
+                    (blur)="updateAmount(expense, $event)"
+                    step="0.01"
+                    min="0">
+                </td>
+
+                <!-- Vencimento -->
+                <td class="d-none d-md-table-cell">
+                  <input
+                    type="date"
+                    class="form-control form-control-sm expense-input"
+                    [value]="formatDate(expense.dueDate)"
+                    (change)="updateDueDate(expense, $event)">
+                </td>
+
+                <!-- Tipo (DD / Manual / —) -->
+                <td class="d-none d-lg-table-cell text-center">
+                  @if (isAdHoc(expense)) {
+                    <!-- Despesa manual -->
+                    <span class="badge bg-warning text-dark" title="Despesa manual">M</span>
+                  } @else if (expense.isDirectDebit) {
+                    <!-- Débito direto -->
+                    <span class="badge bg-success" title="Débito direto">DD</span>
+                  } @else {
+                    <!-- Despesa fixa não-DD -->
+                    <span class="badge bg-secondary" title="Despesa fixa">—</span>
+                  }
+                </td>
+
+                <!-- Data Pagto -->
+                <td class="d-none d-md-table-cell">
+                  @if (expense.isPaid) {
+                    <input
+                      type="date"
+                      class="form-control form-control-sm expense-input"
+                      [value]="formatDate(expense.paidDate)"
+                      (change)="updatePaidDate(expense, $event)">
+                  } @else {
+                    <span class="text-muted">-</span>
+                  }
+                </td>
+
+                <!-- Ações -->
+                <td class="text-center">
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteExpense(expense)"
+                    title="Excluir">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+
+              </tr>
+            }
+
+            @if (monthlyExpenses.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center py-4">
+                  <i class="bi bi-inbox display-4 text-muted d-block mb-2"></i>
+                  <p class="text-muted mb-0">
+                    Nenhuma despesa cadastrada para este mês.<br>
+                    Use <strong>Carregar Despesas</strong> ou <strong>Nova Despesa</strong> para começar.
+                  </p>
+                </td>
+              </tr>
+            }
+          </tbody>
+
+          @if (monthlyExpenses.length > 0) {
+            <tfoot class="table-light">
+              <tr class="fw-bold">
+                <td colspan="2" class="text-end">TOTAL:</td>
+                <td class="text-end">{{ totalExpenses | currencyBr }}</td>
+                <td colspan="3" class="d-none d-md-table-cell"></td>
+                <td class="text-end d-none d-md-table-cell">
+                  <span class="text-danger">{{ totalPending | currencyBr }}</span>
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
+          }
+
+        </table>
+      </div><!-- /table-responsive -->
+    </div><!-- /card -->
+
+    <!-- Legenda de tipos (visível só em desktop) -->
+    @if (monthlyExpenses.length > 0) {
+      <div class="d-none d-lg-flex gap-3 mb-3 ms-1">
+        <small class="text-muted d-flex align-items-center gap-1">
+          <span class="badge bg-success">DD</span> Débito Direto
+        </small>
+        <small class="text-muted d-flex align-items-center gap-1">
+          <span class="badge bg-secondary">—</span> Despesa Fixa
+        </small>
+        <small class="text-muted d-flex align-items-center gap-1">
+          <span class="badge bg-warning text-dark">M</span> Manual
+        </small>
+      </div>
+    }
+
+    <!-- Dashboard -->
+    @if (monthlyExpenses.length > 0) {
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            <i class="bi bi-pie-chart me-2"></i>
+            Dashboard — {{ getMonthName(+selectedMonth) }}/{{ selectedYear }}
+          </h5>
+        </div>
+        <div class="card-body">
+          @if (dashboardKey) {
+            <app-dashboard-chart
+              [month]="selectedMonth"
+              [year]="selectedYear">
+            </app-dashboard-chart>
+          }
+        </div>
+      </div>
+    }
+
+  }<!-- /else loading -->
+
+</div><!-- /container-fluid -->

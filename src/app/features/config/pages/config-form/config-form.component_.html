@@ -1,0 +1,101 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="bi bi-database me-2"></i>
+            Configuração MongoDB Atlas
+          </h4>
+        </div>
+        <div class="card-body">
+          @if (useMockData) {
+            <div class="alert alert-info mb-3">
+              <i class="bi bi-info-circle me-2"></i>
+              <strong>Modo Mock:</strong> Usando dados de exemplo. Configure o MongoDB para usar dados reais.
+            </div>
+          }
+
+          <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Host do Cluster</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="host" 
+                placeholder="cluster0.xxxxx.mongodb.net">
+              <small class="text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                Sem mongodb:// ou porta. Ex: cluster0.abc123.mongodb.net
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nome do Database</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="database" 
+                placeholder="expense_tracker">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Usuário</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="username" 
+                placeholder="seu_usuario"
+                autocomplete="username">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Senha</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                formControlName="password" 
+                placeholder="sua_senha"
+                autocomplete="current-password">
+              <small class="text-muted">
+                <i class="bi bi-shield-lock me-1"></i>
+                Armazenado com segurança no IndexedDB do navegador
+              </small>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg" 
+                [disabled]="!configForm.valid">
+                <i class="bi bi-check-lg me-2"></i>
+                Salvar Configuração
+              </button>
+              
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                (click)="clearConfig()">
+                <i class="bi bi-trash me-2"></i>
+                Limpar e Usar Mock
+              </button>
+            </div>
+          </form>
+
+          <hr class="my-4">
+
+          <div class="small text-muted">
+            <p class="mb-2"><strong>Passos para configurar MongoDB Atlas:</strong></p>
+            <ol class="mb-0">
+              <li>Crie uma conta no <a href="https://www.mongodb.com/cloud/atlas" target="_blank">MongoDB Atlas</a></li>
+              <li>Crie um cluster gratuito (M0)</li>
+              <li>Configure Network Access (adicione 0.0.0.0/0 para testes)</li>
+              <li>Crie um usuário do banco de dados</li>
+              <li>Obtenha a connection string e preencha os campos acima</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

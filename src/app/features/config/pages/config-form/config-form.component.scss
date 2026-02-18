@@ -1,0 +1,60 @@
+.card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+  border: none;
+  
+  h4 {
+    font-size: 1.5rem;
+    
+    i {
+      font-size: 1.75rem;
+      vertical-align: middle;
+    }
+  }
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.form-control {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(30, 64, 175, 0.25);
+  }
+}
+
+.btn-lg {
+  padding: 0.875rem 1.5rem;
+  font-size: 1.125rem;
+  border-radius: 0.5rem;
+}
+
+.alert {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+hr {
+  opacity: 0.1;
+}
+
+@media (max-width: 767px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+}
