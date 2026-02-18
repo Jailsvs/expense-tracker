@@ -42,8 +42,8 @@ jobs:
         # O --base-href é crítico para funcionar no subdomínio GitHub Pages
         # Formato: https://jailsvs.github.io/expense-tracker/
 
-      - name: Copy 404.html for SPA routing
-        run: cp dist/expense-tracker-pwa/browser/index.html dist/expense-tracker-pwa/browser/404.html
+      #- name: Copy 404.html for SPA routing
+      #  run: cp dist/expense-tracker-pwa/browser/index.html dist/expense-tracker-pwa/browser/404.html
         # GitHub Pages usa 404.html para redirecionar rotas do Angular
 
       - name: Add .nojekyll
