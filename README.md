@@ -120,7 +120,7 @@ src/
     │   ├── monthly-expenses/
     │   │   ├── components/
     │   │   │   ├── dashboard-chart/       ← Gráfico de pizza
-    │   │   │   └── add-adhoc-expense-modal/ ← ⭐ NOVO modal despesa manual
+    │   │   │   └── add-adhoc-expense-modal/ ← ⭐ Modal despesa manual
     │   │   ├── pages/
     │   │   │   └── monthly-manager/       ← Tela principal
     │   │   └── services/

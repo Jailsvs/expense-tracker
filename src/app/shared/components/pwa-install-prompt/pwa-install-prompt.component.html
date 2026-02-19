@@ -1,0 +1,32 @@
+<!-- Banner só aparece se: canInstall + !isInstalled + isMobile + isVisible -->
+<div class="pwa-banner" 
+     *ngIf="(shouldShow$ | async) && isVisible">
+  
+  <div class="pwa-banner__content">
+    
+    <div class="pwa-banner__icon">
+      <i class="bi bi-phone"></i>
+    </div>
+    
+    <div class="pwa-banner__text">
+      <strong>Instalar Expense Tracker</strong>
+      <span>Acesse offline e adicione à tela inicial</span>
+    </div>
+    
+    <div class="pwa-banner__actions">
+      <button class="pwa-btn pwa-btn--primary" 
+              (click)="onInstall()"
+              type="button">
+        Instalar
+      </button>
+      <button class="pwa-btn pwa-btn--close" 
+              (click)="onDismiss()"
+              type="button"
+              aria-label="Fechar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    
+  </div>
+  
+</div>

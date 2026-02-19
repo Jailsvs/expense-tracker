@@ -1,88 +1,134 @@
 <div class="home-wrapper">
 
-  <!-- Fundo com partículas decorativas -->
+  <!-- Fundo com elementos financeiros animados -->
   <div class="bg-layer" aria-hidden="true">
-    <div class="bg-orb bg-orb--1"></div>
-    <div class="bg-orb bg-orb--2"></div>
-    <div class="bg-orb bg-orb--3"></div>
-    <div class="bg-grid"></div>
+    <!-- Moedas flutuantes -->
+    <div class="coin coin--1">💰</div>
+    <div class="coin coin--2">💵</div>
+    <div class="coin coin--3">💳</div>
+    <div class="coin coin--4">📊</div>
+    <div class="coin coin--5">💸</div>
+    
+    <!-- Grid de cifrões sutil -->
+    <div class="money-pattern"></div>
   </div>
 
-  <!-- Conteúdo principal -->
   <main class="home-main">
 
-    <!-- Ícone principal: família + finanças -->
-    <div class="icon-wrapper" aria-hidden="true">
-      <div class="icon-ring icon-ring--outer"></div>
-      <div class="icon-ring icon-ring--inner"></div>
-      <div class="icon-core">
-        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="main-svg">
-          <!-- Casa / família -->
-          <path d="M40 12 L62 30 L62 64 L18 64 L18 30 Z" stroke="currentColor" stroke-width="2.5"
-                stroke-linejoin="round" fill="none" class="svg-house"/>
-          <path d="M32 64 L32 46 Q32 42 36 42 L44 42 Q48 42 48 46 L48 64" stroke="currentColor"
-                stroke-width="2" fill="none" class="svg-door"/>
-          <!-- Telhado / família -->
-          <path d="M13 30 L40 10 L67 30" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round" class="svg-roof"/>
-          <!-- Moeda / despesa -->
-          <circle cx="57" cy="55" r="13" fill="var(--gold)" opacity="0.95" class="svg-coin-bg"/>
-          <circle cx="57" cy="55" r="13" stroke="var(--gold-dark)" stroke-width="1.5" fill="none"/>
-          <text x="57" y="59.5" text-anchor="middle" font-size="13" font-weight="700"
-                fill="var(--bg-deep)" font-family="Georgia, serif" class="svg-coin-text">R$</text>
-          <!-- Pessoas / silhuetas -->
-          <circle cx="30" cy="36" r="3.5" fill="var(--gold)" opacity="0.7"/>
-          <circle cx="40" cy="34" r="4"   fill="var(--gold)"/>
-          <circle cx="50" cy="36" r="3.5" fill="var(--gold)" opacity="0.7"/>
+    <!-- Porquinho animado -->
+    <div class="icon-hero">
+      <div class="piggy-bank">
+        <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="piggy-svg">
+          <!-- Corpo do porquinho -->
+          <ellipse cx="100" cy="100" rx="70" ry="55" fill="#f59e0b" class="piggy-body"/>
+          <ellipse cx="100" cy="100" rx="70" ry="55" fill="url(#piggyGradient)" opacity="0.3"/>
+          
+          <!-- Patas -->
+          <rect x="70" y="140" width="15" height="25" rx="7" fill="#f59e0b"/>
+          <rect x="115" y="140" width="15" height="25" rx="7" fill="#f59e0b"/>
+          
+          <!-- Focinho -->
+          <ellipse cx="140" cy="95" rx="25" ry="20" fill="#fbbf24"/>
+          <circle cx="135" cy="90" r="4" fill="#0f172a"/>
+          <circle cx="135" cy="100" r="4" fill="#0f172a"/>
+          
+          <!-- Olho -->
+          <circle cx="90" cy="85" r="8" fill="#0f172a"/>
+          <circle cx="92" cy="83" r="3" fill="#60a5fa"/>
+          
+          <!-- Orelha -->
+          <path d="M 75 65 Q 65 50 75 40 Q 80 50 75 65 Z" fill="#f59e0b"/>
+          
+          <!-- Rabo enrolado -->
+          <path d="M 35 90 Q 25 85 30 75 Q 35 80 30 90" 
+                stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round"/>
+          
+          <!-- Fenda para moedas -->
+          <rect x="85" y="55" width="30" height="6" rx="3" fill="#0f172a" opacity="0.6"/>
+          
+          <!-- Moeda entrando -->
+          <circle cx="100" cy="45" r="12" fill="#fbbf24" class="coin-drop">
+            <animate attributeName="cy" values="45;58;45" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="100" y="50" text-anchor="middle" font-size="16" font-weight="bold" 
+                fill="#0f172a" class="coin-drop">R$</text>
+          
+          <defs>
+            <linearGradient id="piggyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0" />
+            </linearGradient>
+          </defs>
         </svg>
       </div>
+      
+      <!-- Sparkles ao redor -->
+      <div class="sparkle sparkle--1">✨</div>
+      <div class="sparkle sparkle--2">💫</div>
+      <div class="sparkle sparkle--3">⭐</div>
     </div>
 
-    <!-- Identificação -->
+    <!-- Identificação descontraída -->
     <div class="identity">
-      <p class="identity__role">Fullstack Software Developer</p>
-      <h1 class="identity__name">Jailson Volnei<br><span class="identity__surname">dos Santos</span></h1>
-      <div class="identity__divider" aria-hidden="true">
-        <span></span><span class="identity__divider-dot"></span><span></span>
+      <div class="badge-dev">
+        <i class="bi bi-code-slash"></i>
+        Fullstack Developer
       </div>
-      <p class="identity__tagline">
-        Desenvolvendo soluções web e mobile com foco em qualidade,<br class="d-none d-md-inline">
-        experiência do usuário e código limpo.
+      
+      <h1 class="identity__name">
+        Jailson Volnei <br>
+        <span class="gradient-text">dos Santos</span>
+      </h1>
+      
+      <p class="identity__bio">
+        Criando soluções web que fazem sentido 🚀<br>
+        Seu bolso agradece quando uso clean code 💸
       </p>
     </div>
 
-    <!-- Links de contato -->
-    <div class="contact-links">
+    <!-- Cards de contato modernos -->
+    <div class="contact-grid">
       @for (link of links; track link.label) {
         <a [href]="link.href"
            target="_blank"
            rel="noopener noreferrer"
-           class="contact-chip"
-           [class]="'contact-chip ' + link.color">
-          <i class="bi {{ link.icon }} contact-chip__icon"></i>
-          <span class="contact-chip__label">{{ link.label }}</span>
-          <i class="bi bi-arrow-up-right contact-chip__arrow"></i>
+           class="contact-card"
+           [class]="'contact-card ' + link.color">
+          <div class="contact-card__icon">
+            <i class="bi {{ link.icon }}"></i>
+          </div>
+          <span class="contact-card__label">{{ link.label }}</span>
+          <i class="bi bi-arrow-up-right contact-card__arrow"></i>
         </a>
       }
     </div>
 
-    <!-- CTA principal -->
-    <div class="cta-section">
-      <a routerLink="/monthly-expenses" class="cta-btn">
-        <i class="bi bi-calendar3-week me-2"></i>
-        Acessar Expense Tracker
-        <i class="bi bi-arrow-right cta-btn__arrow"></i>
+    <!-- CTA grande e chamativo -->
+    <div class="cta-wrapper">
+      <a routerLink="/monthly-expenses" class="cta-main">
+        <div class="cta-main__icon">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div class="cta-main__text">
+          <strong>Abrir Expense Tracker</strong>
+          <span>Controle suas despesas familiares</span>
+        </div>
+        <i class="bi bi-arrow-right cta-main__arrow"></i>
       </a>
-      <p class="cta-hint">Controle de despesas familiares mensais</p>
+      
+      <p class="fun-fact">
+        <i class="bi bi-piggy-bank-fill"></i>
+        Economize R$ enquanto mantém tudo organizado
+      </p>
     </div>
 
   </main>
 
-  <!-- Rodapé sutil -->
+  <!-- Footer mais casual -->
   <footer class="home-footer">
-    <span>© {{ currentYear }} Jailson Volnei dos Santos</span>
-    <span class="home-footer__sep" aria-hidden="true">·</span>
-    <span>Expense Tracker PWA</span>
+    <span>© {{ currentYear }} Jailson Volnei</span>
+    <span class="footer-sep">•</span>
+    <span>Feito com <i class="bi bi-heart-fill"></i> e muito ☕</span>
   </footer>
 
 </div>

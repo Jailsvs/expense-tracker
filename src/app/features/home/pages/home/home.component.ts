@@ -20,14 +20,14 @@ export class HomeComponent {
       color: 'link-linkedin'
     },
     {
-      label: 'j****@gmail.com',
-      href: 'mailto:j****@gmail.com',
+      label: 'j*****@gmail.com',
+      href: 'mailto:j*****@gmail.com',
       icon: 'bi-envelope-fill',
       color: 'link-gmail'
     },
     {
-      label: '+55 47 99xxx-9xxx',
-      href: 'https://wa.me/554799xxx-9xxx',
+      label: '+55 47 99*7*-9*7*',
+      href: 'https://wa.me/554799*7*9*7*',
       icon: 'bi-whatsapp',
       color: 'link-whatsapp'
     }
