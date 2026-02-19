@@ -3,11 +3,11 @@
   "short_name": "Expense Tracker",
   "description": "Sistema PWA para gestão de despesas mensais com dashboard interativo",
   "theme_color": "#1e40af",
-  "background_color": "#0a0e1a",
+  "background_color": "#0f172a",
   "display": "standalone",
   "orientation": "portrait-primary",
   "scope": "/expense-tracker/",
-  "start_url": "/expense-tracker/",
+  "start_url": "/expense-tracker/?source=pwa",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
@@ -75,7 +75,7 @@
       "name": "Despesas Mensais",
       "short_name": "Mensais",
       "description": "Ver despesas do mês atual",
-      "url": "/expense-tracker/monthly-expenses",
+      "url": "/expense-tracker/monthly-expenses?source=shortcut",
       "icons": [
         {
           "src": "assets/icons/icon-96x96.png",
@@ -87,7 +87,7 @@
       "name": "Nova Despesa",
       "short_name": "Nova",
       "description": "Adicionar nova despesa fixa",
-      "url": "/expense-tracker/expenses/new",
+      "url": "/expense-tracker/expenses/new?source=shortcut",
       "icons": [
         {
           "src": "assets/icons/icon-96x96.png",
